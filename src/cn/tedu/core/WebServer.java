@@ -1,5 +1,7 @@
 package cn.tedu.core;
 
+import cn.tedu.context.ServerContext;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -14,8 +16,8 @@ public class WebServer {
 
     public WebServer() {
         try {
-            server = new ServerSocket(8080);
-            pool = Executors.newFixedThreadPool(100);
+            server = new ServerSocket(ServerContext.port);
+            pool = Executors.newFixedThreadPool(ServerContext.maxSize);
         } catch (IOException e) {
             e.printStackTrace();
         }
