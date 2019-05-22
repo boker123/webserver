@@ -1,5 +1,7 @@
 package cn.tedu.http;
 
+import cn.tedu.context.HttpContext;
+
 import java.io.OutputStream;
 import java.io.PrintStream;
 
@@ -14,7 +16,6 @@ public class HttpResponse {
     private int status;
     private String contentType;
     private int contentLength;
-    private String statusStr;
 
     // 2,在构造函数中传入OutputStream对象
     private OutputStream out;
@@ -26,7 +27,7 @@ public class HttpResponse {
     public OutputStream getOut() {
         if(!isSend) {
             PrintStream ps = new PrintStream(out);
-            ps.println(protocol+" "+status+" "+statusStr);
+            ps.println(protocol+" "+status+" "+ HttpContext.map.get(status));
             ps.println("Content-Type:"+contentType);
             ps.println("Content-Length:"+contentLength);
             ps.println();
@@ -37,14 +38,6 @@ public class HttpResponse {
 
     public void setOut(OutputStream out) {
         this.out = out;
-    }
-
-    public String getStatusStr() {
-        return statusStr;
-    }
-
-    public void setStatusStr(String statusStr) {
-        this.statusStr = statusStr;
     }
 
     public String getProtocol() {
